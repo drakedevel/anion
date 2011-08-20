@@ -14,9 +14,6 @@ function setIonOpts() { declare -g -r cIonOpts="$@"; }
 function setSampleFactor() { declare -g -r cSampleFactor="$1"; }
 . "$1"
 
-jsbin="../js-$btype$arch/js"
-resultdir="results_${btype}${arch}_$(tr ' ' '_' <<< "$opts")"
-
 # Parameters
 declare -r pTempDir="/tmp"
 declare -r pResultDir="results-${cConfigName:?}"
