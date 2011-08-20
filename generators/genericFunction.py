@@ -11,6 +11,7 @@ DEFINED_LIKELIHOOD = 8
 EXPR_NEST_LIKELIHOOD = 3
 STMT_NEST_LIKELIHOOD = 4
 PARAMETER_LIKELIHOOD = 2
+BRANCH_COMPARE_LIKELIHOOD = 3
 MAX_DEPTH = 8
 INDENT = "    "
 
@@ -82,10 +83,15 @@ def binary_bitop_expr(d):
     bitop = r.choice(binary_bitops)
     return "(%s %s %s)" % (expr(d+1), bitop, expr(d+1))
 
-binary_ariths = ['+']
+binary_ariths = ['+','*']
 def binary_arith_expr(d):
     arith = r.choice(binary_ariths)
     return "(%s %s %s)" % (expr(d+1), arith, expr(d+1))
+
+compares = ['<', '<=', '==', '>=', '>']
+def compare_expr(d):
+    compare = r.choice(compares)
+    return "(%s %s %s)" % (expr(d+1), compare, expr(d+1))
 
 unary_bitops = ['~']
 def unary_bitop_expr(d):
@@ -123,7 +129,7 @@ def var_expr(d):
 def one_point_seven_expr(d):
     return "1.7"
 
-nest_exprs = [(100,binary_bitop_expr), (100,binary_arith_expr), (0,unary_bitop_expr)]
+nest_exprs = [(100,binary_bitop_expr), (100,binary_arith_expr), (20, compare_expr), (20,unary_bitop_expr)]
 root_exprs = [(100,param_expr), (100,var_expr), (10,one_point_seven_expr), (0,var_incdec_expr), (0,param_incdec_expr)]
 def expr(d):
     if d < MAX_DEPTH and r.randrange(0, EXPR_NEST_LIKELIHOOD) == 0:
@@ -147,11 +153,17 @@ def do_stmt(d):
     for i in range(0, r.randint(0, MAX_STATEMENTS)):
         stmt(d+1)
     loop_depth -= 1
-    end_block("} while (%s);" % (expr(d+1)))
+    if r.randint(0, BRANCH_COMPARE_LIKELIHOOD) == 0: 
+        end_block("} while (%s);" % (compare_expr(d+1)))
+    else:
+        end_block("} while (%s);" % (expr(d+1)))
 
 def while_stmt(d):
     global loop_depth
-    begin_block("loop%d: while (%s) {" % (loop_depth, expr(d+1)))
+    if r.randint(0, BRANCH_COMPARE_LIKELIHOOD) == 0:
+        begin_block("loop%d: while (%s) {" % (loop_depth, compare_expr(d+1)))
+    else:
+        begin_block("loop%d: while (%s) {" % (loop_depth, expr(d+1)))
     loop_depth += 1
     for i in range(0, r.randint(0, MAX_STATEMENTS)):
         stmt(d+1)
@@ -159,13 +171,19 @@ def while_stmt(d):
     end_block("}")
 
 def if_stmt(d):
-    begin_block("if (%s) {" % expr(d+1))
+    if r.randint(0, BRANCH_COMPARE_LIKELIHOOD) == 0:
+        begin_block("if (%s) {" % compare_expr(d+1))
+    else:
+        begin_block("if (%s) {" % expr(d+1))
     for i in range(0, r.randint(0, MAX_STATEMENTS)):
         stmt(d+1)
     end_block("}")
 
 def ifelse_stmt(d):
-    begin_block("if (%s) {" % expr(d+1))
+    if r.randint(0, BRANCH_COMPARE_LIKELIHOOD) == 0:
+        begin_block("if (%s) {" % compare_expr(d+1))
+    else:
+        begin_block("if (%s) {" % expr(d+1))
     for i in range(0, r.randint(0, MAX_STATEMENTS / 2)):
         stmt(d+1)
     continue_block("} else {")
