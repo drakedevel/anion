@@ -1,6 +1,6 @@
 This is known to work on Fedora 15 or newer (read: the versions of all relevant
 utilities that the author happened to have installed). The shell scripts
-extensively use bash extensions (some requiring as new as bash >= 4.2), so a
+extensively use bash extensions (some requiring as new as bash >= 4.1), so a
 modern distro is likely required.
 
 To use anion, read the "config options" section of anion.sh, produce a

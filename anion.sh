@@ -6,12 +6,12 @@ if [[ $# -ne 1 ]]; then
 fi
 
 # Settings
-function setConfigName() { declare -g -r cConfigName="$1"; }
-function setGenerator() { declare -g -r cGenerator="$1"; }
-function setGeneratorParams() { declare -g -r cGeneratorParams="$@"; }
-function setIonBinary() { declare -g -r cIonBinary="$1"; }
-function setIonOpts() { declare -g -r cIonOpts="$@"; }
-function setSampleFactor() { declare -g -r cSampleFactor="$1"; }
+function setConfigName() { cConfigName="$1"; }
+function setGenerator() { cGenerator="$1"; }
+function setGeneratorParams() { cGeneratorParams="$@"; }
+function setIonBinary() { cIonBinary="$1"; }
+function setIonOpts() { cIonOpts="$@"; }
+function setSampleFactor() { cSampleFactor="$1"; }
 . "$1"
 
 # Parameters

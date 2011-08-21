@@ -5,13 +5,13 @@ if [[ $# -ne 1 ]]; then
 fi
 
 # Settings
-function setConfigName() { declare -g -r cConfigName="$1"; }
-function setGenerator() { declare -g -r cGenerator="$1"; }
-function setGeneratorParams() { declare -g -r cGeneratorParams="$@"; }
-function setIonBinary() { declare -g -r cIonBinary="$1"; }
-function setIonParamsA() { declare -g -r cIonParamsA="$@"; }
-function setIonParamsB() { declare -g -r cIonParamsB="$@"; }
-function setTracer() { declare -g -r cTracer="$1"; }
+function setConfigName() { cConfigName="$1"; }
+function setGenerator() { cGenerator="$1"; }
+function setGeneratorParams() { cGeneratorParams="$@"; }
+function setIonBinary() { cIonBinary="$1"; }
+function setIonParamsA() { cIonParamsA="$@"; }
+function setIonParamsB() { cIonParamsB="$@"; }
+function setTracer() { cTracer="$1"; }
 . "$1"
 
 # Parameters
