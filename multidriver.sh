@@ -1,13 +1,14 @@
 #!/bin/bash
 # This is a small driver to drive "driver.sh" on multiple processes
 # while killing all of them with C-c or C-\.
-if [[ $# -lt 2 ]]; then
-    echo "Usage: $0 <config> <nthreads>"
+if [[ $# -lt 3 ]]; then
+    echo "Usage: $0 <driver> <config> <nthreads>"
 fi
 
 # Parameters
-declare -r pConfig="$1"
-declare -i -r pNumThreads="$2"
+declare -r pDriver="$1"
+declare -r pConfig="$2"
+declare -i -r pNumThreads="$3"
 
 # Global variables
 declare -a gThreads
@@ -23,7 +24,7 @@ trap bail SIGINT
 trap bail SIGTERM
 
 for i in `seq 1 $pNumThreads`; do
-    ./driver.sh "$pConfig" &
+    "${pDriver}" "$pConfig" &
     gThreads[i]=$!
 done
 wait
