@@ -28,7 +28,7 @@ declare -r pTriageScript="$(dirname "$0")/triage.sh"
 declare gGeneratorBinary="${cGenerator:?}"
 declare gGeneratorParams="${cGeneratorParams:-}"
 declare gJSTestBinary="${cIonBinary:?}"
-declare gJSTestParams="--ion ${cIonOpts:-}"
+declare gJSTestParams="${cIonOpts:-}"
 declare gSkipIndex=0
 declare gTestSourceHash
 declare gTestSource
