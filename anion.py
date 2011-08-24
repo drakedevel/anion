@@ -64,7 +64,6 @@ if __name__ == '__main__':
                         spam('.')
                     else:
                         spam('z')
-                        save_testcase(config_name, test, 'sleepy')
                 else:
                     alert('Wrong answer')
                     save_output(config_name, test, output, ref_output, 'divergences')
