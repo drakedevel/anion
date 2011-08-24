@@ -1,0 +1,14 @@
+; All paths are relative to run directory
+; * = mandatory
+[cation]
+config-name = cation-example ; * Put results in results-cation-example
+sample-factor = 2            ;   Print half of the spam
+driver-script = ./driver.js  ;   Path to driver.js (default CWD)
+a-binary = /path/to/js       ; * Path to version A
+a-options = --ion --whatever ;   Command line options to version A
+b-binary = /path/to/js       ; * a-binary, but for B
+b-options = --ion --stuff    ;   a-options, but for B
+generator-binary = ./foo.py  ; * Path to test generator binary
+generator-options =          ;   Command line options for generator
+script-timeout = 0.5         ;   Time to wait for slow scripts
+keyword = EXAMPLE            ; * Count "CATION:EXAMPLE" lines
